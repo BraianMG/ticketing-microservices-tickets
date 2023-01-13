@@ -1,7 +1,13 @@
 import request from 'supertest';
 import { app } from '../../app';
 
-it('has a route listening to POST /api/tickets', async () => {});
+it('has a route listening to POST /api/tickets', async () => {
+  const response = await request(app)
+    .post('/api/tickets')
+    .send({});
+
+  expect(response.statusCode).not.toEqual(404);
+});
 
 it('can only be accessed ifthe user is signed in', async () => {});
 
