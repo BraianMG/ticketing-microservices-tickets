@@ -40,7 +40,7 @@ it('returns an error if an invalid title is provided', async () => {
 });
 
 it('returns an error if an invalid price is provided', async () => {
-await request(app)
+  await request(app)
     .post('/api/tickets')
     .set('Cookie', global.signupAndGetCookie())
     .send({ title: 'Test Title', price: -10})
@@ -53,4 +53,11 @@ await request(app)
     .expect(400);
 });
 
-it('creates a ticket with valid inputs', async () => {});
+it('creates a ticket with valid inputs', async () => {
+  // TODO: add in a check to make sure a ticket was saved
+  await request(app)
+    .post('/api/tickets')
+    .set('Cookie', global.signupAndGetCookie())
+    .send({ title: 'Test Title', price: 20})
+    .expect(201);
+});
