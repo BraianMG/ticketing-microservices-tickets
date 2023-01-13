@@ -2,7 +2,7 @@ import express from "express";
 import 'express-async-errors';
 import { json } from "body-parser";
 import cookieSession from "cookie-session";
-import { NotFoundError, errorHandler } from "@braianmg-ticketing/common";
+import { NotFoundError, currentUser, errorHandler } from "@braianmg-ticketing/common";
 import { createTicketRouter } from "./routes/new";
 
 const app = express();
@@ -12,6 +12,7 @@ app.use(cookieSession({
   signed: false,
   secure: process.env.NODE_ENV !== 'test'
 }));
+app.use(currentUser)
 
 app.use(createTicketRouter);
 
