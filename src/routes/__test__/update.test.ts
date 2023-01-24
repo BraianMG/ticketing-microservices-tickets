@@ -21,7 +21,7 @@ it('returns a 401 if the user is not authenticated', async () => {
   await request(app)
     .put(`/api/tickets/${id}`)
     .send({ title, price })
-    .expect(404);
+    .expect(401);
 });
 
 it('returns a 401 if the user does not own the ticket', async () => {});
