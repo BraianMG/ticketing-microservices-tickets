@@ -10,6 +10,15 @@ const start = async () => {
 
   try {
     await natsWrapper.connect('ticketing', 'adasd', 'http://nats-srv:4222'); // here it is "ticketing" because that is how we define it in the arguments of the NATS deployment file in the infra submodule
+
+    natsWrapper.client.on('close', () => {
+      console.log('NATS connection closed!');
+      process.exit();
+    });
+
+    process.on('SIGINT', () => natsWrapper.client.close());
+    process.on('SIGTERM', () => natsWrapper.client.close());
+
     await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to MongoDB');
   } catch (error) {
