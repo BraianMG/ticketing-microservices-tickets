@@ -10,6 +10,8 @@ declare global {
 
 let mongo: any;
 
+jest.mock('../nats-wrapper');
+
 beforeAll(async () => {
   //jest.setTimeout(10000);
   process.env.JWT_KEY = 'Asd.123';
