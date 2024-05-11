@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
 import { NotAuthorizedError, NotFoundError, requireAuth, validateRequest } from '@braianmg-ticketing/common';
-import { natsWrapper } from '../../nats-wrapper';
+import { natsWrapper } from '../nats-wrapper';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
 
 const router = express.Router();
