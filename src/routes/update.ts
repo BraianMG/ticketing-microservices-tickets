@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
-import { NotAuthorizedError, NotFoundError, requireAuth, validateRequest } from '@braianmg-ticketing/common';
+import { BadRequestError, NotAuthorizedError, NotFoundError, requireAuth, validateRequest } from '@braianmg-ticketing/common';
 import { natsWrapper } from '../nats-wrapper';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
 
@@ -23,6 +23,10 @@ router.put(
     if (!ticket) throw new NotFoundError();
 
     if (ticket.userId !== req.currentUser!.id) throw new NotAuthorizedError();
+
+    if (ticket.orderId) {
+      throw new BadRequestError('Cannot edit a reserved ticket');
+    }
 
     ticket.set({
       title: req.body.title,
